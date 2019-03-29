@@ -19,4 +19,14 @@
 * Additionally, the user can input do-what-it-says to have the program read an associated text file and act on the text present
 
 ## Images of Functionality
+* Example of working Spotify and Movie calls with no user query
 ![Spotify and Movie example](/images/spotify-movie.png)
+
+* Example of working Spotify and Movie calls with user query
+![Spotify and Movie example w/ query](/images/spotify-movie-with-query.png)
+
+* Example of working BandsInTown call
+![Concert example](/images/concert.png)
+
+* Example of working do-what-it-says call
+![Dowhatitsays example](/images/do-what-it-says.png)
