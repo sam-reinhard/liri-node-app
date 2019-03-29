@@ -1,9 +1,9 @@
 //Things to do
     //take spotify keys out of the main document
-    //finish conditionals on dowhatitsays function
 
 var dotenv = require("dotenv").config();
 var keys = require("./keys.js");
+// var spotifyKeys = keys.spotifyKeys;
 var axios = require("axios");
 var moment = require("moment");
 var fs = require("fs");
@@ -16,15 +16,18 @@ var spotify = new Spotify({
 });
 
 var command = process.argv[2];
+var query = process.argv[3];
 
 //function for calling spotify
 function spotifyFunc(){
-    if (process.argv[3]){
-        var query = process.argv.slice(3);
+    if (query === undefined){
+        query = "the sign ace of base";
     }
-    else {
-        var query = "the sign ace of base";
-    }
+    
+    // var client = new Spotify({
+    //     SPOTIFY_ID: spotifyKeys.id,
+    //     SPOTIFY_SECRET: spotifyKeys.secret
+    // });
 
     // write artist(s), the song's name, preview link of the song, and if no song is provided default to "the sign" by ace of bass
     spotify.search({type: 'track', query: query}).then(function(response){
@@ -41,10 +44,8 @@ function spotifyFunc(){
 //function for calling omdb
 function omdb(){
     // if the user doesn't write anything, plug in Mr. Nobody
-    if (process.argv[3]){
-        var query = process.argv.slice(3).join("+");
-    } else {
-        var query = "mr+nobody";
+    if (query === undefined){
+        query = "mr+nobody";
     }
 
     var movieUrl = "http://www.omdbapi.com/?t=" + query + "&y=&plot=short&apikey=trilogy";
@@ -64,7 +65,6 @@ function omdb(){
 
 //function for calling bandsintown
 function bandsInTown(){
-    var query = process.argv.slice(3).join("+");
     var bandUrl = "https://rest.bandsintown.com/artists/" + query + "/events?app_id=codingbootcamp";
 
     axios.get(bandUrl).then(function(response){
@@ -85,35 +85,6 @@ function bandsInTown(){
     })
 };
 
-//function for do what it says
-//maybe have two parameters(command, query) and use query for the variables?
-function doWhatItSays(command, query){
-    fs.readFile("random.txt", "utf8", function(error, response){
-        if (error) {
-            return console.log(error);
-        }
-
-        var responseArr = response.split(",");
-        command = responseArr[0];
-        query = responseArr[1];
-        followCommand(command, query);
-        return;
-        // if (command==="concert-this"){
-        //     //var artist = the second thing in response array, formatted for the url
-        //     bandsInTown();
-        // }
-        // else if (command="spotify-this-song"){
-        //     //var song = the second thing in response array, formatted for the url
-        //     spotify();
-        // }
-        // else if(command==="movie-this"){
-        //     //var movie = the second thing in response array, formatted for the url
-        //     omdb();
-        // }
-    })
-};
-
-
 // conditionals for accepting the user command
 //put this within a function
 function followCommand (){
@@ -127,7 +98,18 @@ function followCommand (){
         omdb();
 
     } else if (command==="do-what-it-says"){
-        doWhatItSays(command, query);
+        //function for do what it says
+        fs.readFile("random.txt", "utf8", function(error, response){
+            if (error) {
+                return console.log(error);
+            }
+    
+            var responseArr = response.split(",");
+            command = responseArr[0];
+            query = responseArr[1];
+            followCommand();
+            return;  
+        })
     }
 };
 
