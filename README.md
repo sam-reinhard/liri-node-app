@@ -19,4 +19,4 @@
 * Additionally, the user can input do-what-it-says to have the program read an associated text file and act on the text present
 
 ## Images of Functionality
-!(/images/spotify-movie)
+![Spotify and Movie example](/images/spotify-movie.png)
