@@ -1,19 +1,14 @@
-//Things to do
-    //take spotify keys out of the main document
 
-var dotenv = require("dotenv").config();
+
+require("dotenv").config();
 var keys = require("./keys.js");
-// var spotifyKeys = keys.spotifyKeys;
 var axios = require("axios");
 var moment = require("moment");
 var fs = require("fs");
 
 var Spotify = require("node-spotify-api");
 
-var spotify = new Spotify({
-    id: '2b51be9d610d4ee2ac3820d6a80c4c03',
-    secret: 'ab9220414eb140588aaacd8ef511221e'
-});
+var spotify = new Spotify(keys.spotifyKeys);
 
 var command = process.argv[2];
 var query = process.argv[3];
@@ -23,11 +18,6 @@ function spotifyFunc(){
     if (query === undefined){
         query = "the sign ace of base";
     }
-    
-    // var client = new Spotify({
-    //     SPOTIFY_ID: spotifyKeys.id,
-    //     SPOTIFY_SECRET: spotifyKeys.secret
-    // });
 
     // write artist(s), the song's name, preview link of the song, and if no song is provided default to "the sign" by ace of bass
     spotify.search({type: 'track', query: query}).then(function(response){
